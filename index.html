@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="description" content="Free client-side 2x2 inch passport photo cropper and 4x6 inch grid generator. Create 6 copies in a 2x3 grid and save as 4x6inch.jpg ready for 300 DPI printing.">
+  <meta name="theme-color" content="#2563eb">
+  <title>Passport Photo Grid Generator (4x6 Inch Print)</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top App Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <img src="favicon.svg" alt="Passport Grid Logo" class="brand-icon">
+        <div class="brand-text">
+          <h1>Passport Photo Grid</h1>
+          <p>2×2" Square to 4×6" Print Sheet (6 Copies)</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="theme-toggle-btn" class="icon-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content">
+
+    <!-- Trust Badges -->
+    <div class="trust-badges">
+      <span class="badge"><span class="badge-dot"></span> 100% Private (Processed in browser)</span>
+      <span class="badge">📐 2" × 2" (51×51 mm) Square Crop</span>
+      <span class="badge">🖨️ 4" × 6" (10×15 cm) 300 DPI Print Sheet</span>
+      <span class="badge">✂️ 6 Copies in 2 Rows × 3 Columns</span>
+    </div>
+
+    <!-- Step 1: Upload Card -->
+    <section id="upload-section" class="upload-card">
+      <!-- Hidden file inputs -->
+      <input type="file" id="file-input" accept="image/*" style="display: none;">
+      <input type="file" id="camera-input" accept="image/*" capture="user" style="display: none;">
+
+      <div class="upload-icon-wrapper">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+      </div>
+      <h2 class="upload-title">Select a Photo to Get Started</h2>
+      <p class="upload-desc">Open a photo from your computer or phone. Your image stays on your device and is never uploaded to any server.</p>
+      
+      <div class="upload-buttons">
+        <button id="browse-btn" class="btn btn-primary btn-lg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+          </svg>
+          Browse Files
+        </button>
+        <button id="camera-btn" class="btn btn-secondary btn-lg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+          Take Photo
+        </button>
+        <button id="sample-btn" class="btn btn-ghost btn-lg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Try Sample Photo
+        </button>
+      </div>
+
+      <div class="upload-hint">
+        <span>Drag & drop anywhere or press</span>
+        <span class="kbd">Ctrl</span> + <span class="kbd">V</span>
+        <span>to paste from clipboard</span>
+      </div>
+    </section>
+
+    <!-- Workspace Section (Shows after photo is loaded) -->
+    <section id="workspace-section" class="workspace-section">
+      
+      <!-- Top status bar -->
+      <div class="workspace-topbar">
+        <div class="workspace-status">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" color="var(--success)">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          <span id="photo-info-text">Photo loaded (Original: 0×0 px)</span>
+        </div>
+        <button id="change-photo-btn" class="btn btn-secondary btn-sm">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Change Photo
+        </button>
+      </div>
+
+      <!-- Main 2-column workspace -->
+      <div class="workspace-grid">
+
+        <!-- Column 1: Interactive 2x2 Crop Box -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <h2 class="panel-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2v14a2 2 0 0 0 2 2h14"></path>
+                <path d="M18 22V8a2 2 0 0 0-2-2H2"></path>
+              </svg>
+              1. Crop 2×2" Square
+            </h2>
+            <span class="panel-tag">1:1 Ratio</span>
+          </div>
+
+          <!-- Square Crop Viewport -->
+          <div class="crop-viewport-wrapper">
+            <div id="crop-viewport" class="crop-viewport-box" title="Drag to move image. Scroll or pinch to zoom.">
+              <canvas id="crop-canvas"></canvas>
+              <canvas id="guide-canvas"></canvas>
+              <div class="crop-overlay-hint">Drag to Pan • Pinch / Scroll to Zoom</div>
+            </div>
+          </div>
+
+          <!-- Zoom Slider -->
+          <div class="control-group">
+            <div class="control-label">
+              <span>Zoom</span>
+              <span id="zoom-val" class="control-value">100%</span>
+            </div>
+            <div class="control-row">
+              <button id="zoom-out-btn" class="icon-btn" title="Zoom Out" aria-label="Zoom Out">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+              </button>
+              <input type="range" id="zoom-slider" min="0.2" max="4.0" step="0.01" value="1.0">
+              <button id="zoom-in-btn" class="icon-btn" title="Zoom In" aria-label="Zoom In">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Fine Rotation & Quick Rotate Toolbar -->
+          <div class="control-group">
+            <div class="control-label">
+              <span>Fine Tilt (Align Head)</span>
+              <span id="tilt-val" class="control-value">0.0°</span>
+            </div>
+            <div class="control-row">
+              <input type="range" id="tilt-slider" min="-15" max="15" step="0.5" value="0">
+              <button id="reset-tilt-btn" class="btn btn-ghost btn-sm" title="Reset Tilt">0°</button>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="button-row">
+            <button id="rotate-left-btn" class="btn btn-secondary btn-sm" title="Rotate 90° Counter-Clockwise">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+              -90°
+            </button>
+            <button id="rotate-right-btn" class="btn btn-secondary btn-sm" title="Rotate 90° Clockwise">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+              +90°
+            </button>
+            <button id="flip-btn" class="btn btn-secondary btn-sm" title="Flip Horizontally">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+              Flip
+            </button>
+            <button id="center-btn" class="btn btn-secondary btn-sm" title="Center & Fit">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+              Fit Center
+            </button>
+          </div>
+
+          <!-- Guide Overlay Switcher -->
+          <div class="control-group">
+            <div class="control-label">
+              <span>Alignment Guide Overlay</span>
+            </div>
+            <div class="segmented-control" id="guide-selector">
+              <button class="segmented-item active" data-guide="passport">Passport Guide</button>
+              <button class="segmented-item" data-guide="grid">3×3 Grid</button>
+              <button class="segmented-item" data-guide="cross">Center Cross</button>
+              <button class="segmented-item" data-guide="none">None</button>
+            </div>
+          </div>
+
+          <!-- Collapsible Color Adjustments -->
+          <details>
+            <summary>
+              <span>Image Lighting Adjustments (Optional)</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </summary>
+            <div class="details-content">
+              <div class="control-group">
+                <div class="control-label">
+                  <span>Brightness</span>
+                  <span id="brightness-val" class="control-value">100%</span>
+                </div>
+                <input type="range" id="brightness-slider" min="50" max="150" step="1" value="100">
+              </div>
+              <div class="control-group">
+                <div class="control-label">
+                  <span>Contrast</span>
+                  <span id="contrast-val" class="control-value">100%</span>
+                </div>
+                <input type="range" id="contrast-slider" min="50" max="150" step="1" value="100">
+              </div>
+              <div class="control-group">
+                <div class="control-label">
+                  <span>Saturation</span>
+                  <span id="saturation-val" class="control-value">100%</span>
+                </div>
+                <input type="range" id="saturation-slider" min="0" max="200" step="1" value="100">
+              </div>
+              <button id="reset-adjustments-btn" class="btn btn-ghost btn-sm">Reset Adjustments</button>
+            </div>
+          </details>
+
+        </div>
+
+        <!-- Column 2: 4x6 Inch Grid Output & Preview -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <h2 class="panel-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="9" y1="3" x2="9" y2="21"></line>
+                <line x1="15" y1="3" x2="15" y2="21"></line>
+              </svg>
+              2. 4×6" Print Sheet (6 Copies)
+            </h2>
+            <span class="panel-tag">2 Rows × 3 Cols</span>
+          </div>
+
+          <!-- 4x6 Sheet Preview Frame -->
+          <div class="sheet-preview-container">
+            <div class="sheet-frame-wrapper">
+              <div class="sheet-canvas-holder">
+                <canvas id="grid-preview-canvas"></canvas>
+              </div>
+              <div class="sheet-dimensions-bar">
+                <span>Standard 4" × 6" Photo Paper</span>
+                <span>6 Photos (2" × 2" each)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Grid Print Options -->
+          <div class="grid-options-grid">
+            <div class="control-group">
+              <label for="guide-lines-select" class="control-label">Cutting Guide Lines</label>
+              <div class="select-wrapper">
+                <select id="guide-lines-select">
+                  <option value="dashed" selected>Thin Dashed Lines (Easy scissors cut)</option>
+                  <option value="corner">Corner Tick Marks (Border marks)</option>
+                  <option value="none">Seamless (No lines)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label for="resolution-select" class="control-label">Print Quality / Resolution</label>
+              <div class="select-wrapper">
+                <select id="resolution-select">
+                  <option value="300" selected>300 DPI - 1800×1200 px (Photo Print Standard)</option>
+                  <option value="600">600 DPI - 3600×2400 px (Ultra High Definition)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Download Action Card -->
+          <div class="download-action-card">
+            <div class="download-cta-header">
+              <div>
+                <h3 class="download-cta-title">Save Print-Ready Image</h3>
+                <p class="download-cta-desc">Export at full 300 DPI resolution with standard JFIF metadata for photo kiosks.</p>
+              </div>
+            </div>
+
+            <div class="download-buttons-group">
+              <!-- Primary Action: Save as 4x6inch.jpg -->
+              <button id="download-grid-btn" class="btn btn-primary btn-lg">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download 4x6inch.jpg
+              </button>
+
+              <!-- Secondary Action: Save single 2x2 photo -->
+              <button id="download-single-btn" class="btn btn-secondary" title="Download single 2x2 inch digital photo">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Single 2×2"
+              </button>
+
+              <!-- Direct Print Action -->
+              <button id="print-btn" class="btn btn-secondary" title="Print directly on photo paper">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                  <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                  <rect x="6" y="14" width="12" height="8"></rect>
+                </svg>
+                Print
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Information & Instructions Guides -->
+    <section class="info-section">
+      <!-- Card 1: CVS / Walgreens Printing Tip -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <div class="info-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          </div>
+          <h3 class="info-card-title">How to Print for ~35¢ (Huge Savings)</h3>
+        </div>
+        <ul class="info-list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span><strong>Do NOT order "Passport Photos"</strong> at pharmacy counters (they charge $15–$17).</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Upload <code class="kbd">4x6inch.jpg</code> to <strong>Walgreens, CVS, Walmart, or Target</strong> as a regular <strong>4×6" photo print</strong> (~$0.35 each).</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Pick up the print and cut along the lines to get <strong>6 official 2×2" photos</strong>.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Card 2: Passport Photo Guidelines Checklist -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <div class="info-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </div>
+          <h3 class="info-card-title">Passport Photo Rules (US & ICAO)</h3>
+        </div>
+        <ul class="info-list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span><strong>Size:</strong> Exact 2×2 inches (51×51 mm) square.</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span><strong>Head Size:</strong> Head from chin to top of hair must be 1" to 1 3/8" (50%–69% of height).</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span><strong>Background:</strong> Plain white or off-white with no shadows.</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span><strong>Appearance:</strong> Neutral expression, both eyes open, no glasses or hats.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Card 3: GitHub Pages Deployment Instructions -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <div class="info-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+          </div>
+          <h3 class="info-card-title">Hosted on GitHub Pages</h3>
+        </div>
+        <ul class="info-list">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Push repository files directly to GitHub:</span>
+          </li>
+          <div class="code-box">git push origin main</div>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>In repository: <strong>Settings &gt; Pages</strong> &gt; Source: <strong>Deploy from branch</strong> (main / root).</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Instantly live at <code class="kbd">https://username.github.io/repo/</code>!</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Area used for window.print() -->
+  <div id="print-area">
+    <img id="print-image" src="" alt="4x6 Print Grid">
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>Passport Photo Grid Generator • Built for GitHub Pages • 100% Client-Side Private</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

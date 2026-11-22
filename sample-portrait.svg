@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+  <!-- Plain off-white/light-gray passport background -->
+  <rect width="800" height="1000" fill="#f4f5f7"/>
+
+  <defs>
+    <linearGradient id="skin" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fcd8ba"/>
+      <stop offset="100%" stop-color="#f5c19d"/>
+    </linearGradient>
+    <linearGradient id="hair" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3d2314"/>
+      <stop offset="100%" stop-color="#24140a"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2b537d"/>
+      <stop offset="100%" stop-color="#1b3652"/>
+    </linearGradient>
+    <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- Shoulders & Body / Dark professional collared shirt -->
+  <path d="M 120 1000 C 130 820, 220 730, 310 700 L 330 750 C 350 780, 450 780, 470 750 L 490 700 C 580 730, 670 820, 680 1000 Z" fill="url(#shirt)"/>
+
+  <!-- Inner Collar / Crewneck -->
+  <path d="M 320 700 Q 400 780 480 700 Q 400 750 320 700 Z" fill="#ffffff" opacity="0.9"/>
+  <path d="M 340 705 Q 400 755 460 705" stroke="#cbd5e1" stroke-width="3" fill="none"/>
+
+  <!-- Neck -->
+  <rect x="345" y="540" width="110" height="170" rx="30" fill="url(#skin)"/>
+  <!-- Neck shadow under chin -->
+  <ellipse cx="400" cy="580" rx="60" ry="25" fill="#e2a882" opacity="0.6"/>
+
+  <!-- Ears -->
+  <ellipse cx="270" cy="480" rx="28" ry="48" fill="#f5c19d"/>
+  <ellipse cx="272" cy="480" rx="16" ry="30" fill="#e8aa82"/>
+  <ellipse cx="530" cy="480" rx="28" ry="48" fill="#f5c19d"/>
+  <ellipse cx="528" cy="480" rx="16" ry="30" fill="#e8aa82"/>
+
+  <!-- Back hair volume -->
+  <ellipse cx="400" cy="420" rx="165" ry="195" fill="url(#hair)"/>
+
+  <!-- Head / Face -->
+  <ellipse cx="400" cy="470" rx="135" ry="175" fill="url(#skin)" filter="url(#soft-shadow)"/>
+
+  <!-- Cheeks subtle blush -->
+  <ellipse cx="320" cy="510" rx="35" ry="18" fill="#f09b83" opacity="0.25"/>
+  <ellipse cx="480" cy="510" rx="35" ry="18" fill="#f09b83" opacity="0.25"/>
+
+  <!-- Front Hair Style -->
+  <path d="M 265 430 C 265 280, 350 250, 400 250 C 470 250, 535 290, 535 430 C 500 340, 450 320, 390 325 C 330 330, 290 370, 265 430 Z" fill="url(#hair)"/>
+  <!-- Hair strands / texture -->
+  <path d="M 330 270 Q 400 300 480 340" stroke="#52321e" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <path d="M 300 320 Q 370 330 430 360" stroke="#52321e" stroke-width="5" stroke-linecap="round" fill="none"/>
+
+  <!-- Eyebrows (neutral, symmetrical) -->
+  <path d="M 315 415 Q 350 405 380 415" stroke="#2b170c" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <path d="M 485 415 Q 450 405 420 415" stroke="#2b170c" stroke-width="7" stroke-linecap="round" fill="none"/>
+
+  <!-- Eyes (centered, looking forward) -->
+  <!-- Left Eye -->
+  <ellipse cx="348" cy="455" rx="22" ry="13" fill="#ffffff"/>
+  <ellipse cx="348" cy="455" rx="11" ry="11" fill="#4a311e"/>
+  <circle cx="348" cy="455" r="5" fill="#111111"/>
+  <circle cx="345" cy="452" r="3" fill="#ffffff"/>
+  <path d="M 326 455 Q 348 440 370 455" stroke="#333333" stroke-width="3" fill="none"/>
+  <path d="M 330 457 Q 348 468 366 457" stroke="#b0856d" stroke-width="1.5" fill="none"/>
+
+  <!-- Right Eye -->
+  <ellipse cx="452" cy="455" rx="22" ry="13" fill="#ffffff"/>
+  <ellipse cx="452" cy="455" rx="11" ry="11" fill="#4a311e"/>
+  <circle cx="452" cy="455" r="5" fill="#111111"/>
+  <circle cx="449" cy="452" r="3" fill="#ffffff"/>
+  <path d="M 430 455 Q 452 440 474 455" stroke="#333333" stroke-width="3" fill="none"/>
+  <path d="M 434 457 Q 452 468 470 457" stroke="#b0856d" stroke-width="1.5" fill="none"/>
+
+  <!-- Nose -->
+  <path d="M 400 450 L 396 520 Q 400 530 408 526" stroke="#d49570" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+  <!-- Nostrils -->
+  <ellipse cx="388" cy="527" rx="6" ry="3" fill="#c48562"/>
+  <ellipse cx="412" cy="527" rx="6" ry="3" fill="#c48562"/>
+
+  <!-- Mouth (Neutral, closed, friendly expression) -->
+  <path d="M 368 575 Q 400 580 432 575" stroke="#a84949" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+  <path d="M 374 574 Q 400 568 426 574" fill="#d97575" opacity="0.4"/>
+  <path d="M 376 577 Q 400 588 424 577" fill="#c45c5c" opacity="0.3"/>
+
+  <!-- Chin dimple shadow -->
+  <ellipse cx="400" cy="610" rx="15" ry="4" fill="#e0a580" opacity="0.5"/>
+</svg>

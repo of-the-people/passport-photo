@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#2563eb"/>
+  <!-- 4x6 photo sheet representation -->
+  <rect x="8" y="14" width="48" height="36" rx="4" fill="#ffffff" stroke="#93c5fd" stroke-width="2"/>
+  <!-- 2x3 grid lines -->
+  <line x1="24" y1="14" x2="24" y2="50" stroke="#bfdbfe" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <line x1="40" y1="14" x2="40" y2="50" stroke="#bfdbfe" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <line x1="8" y1="32" x2="56" y2="32" stroke="#bfdbfe" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <!-- Mini portraits in the cells -->
+  <circle cx="16" cy="21" r="3.5" fill="#3b82f6"/>
+  <circle cx="32" cy="21" r="3.5" fill="#3b82f6"/>
+  <circle cx="48" cy="21" r="3.5" fill="#3b82f6"/>
+  <circle cx="16" cy="39" r="3.5" fill="#3b82f6"/>
+  <circle cx="32" cy="39" r="3.5" fill="#3b82f6"/>
+  <circle cx="48" cy="39" r="3.5" fill="#3b82f6"/>
+</svg>
